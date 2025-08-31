@@ -1,5 +1,5 @@
 
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import AboutUs from './components/AboutUs'
 import ContactUs from './components/ContactUs'
@@ -12,19 +12,23 @@ import StarRating from './components/StarRating'
 import Login from './components/Login'
 import Header from './components/Header'
 import SideNav from './components/SideNav'
+import ReactFiber from './components/ReactFiber'
 
 function App() {
+  
   const [status, setStatus] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  let newStatus = useOnlineStatus();
+  const newStatus = useOnlineStatus();
+  
   useEffect(()=>{
     setStatus(newStatus);
   },[newStatus]);
-
+  
   return (
     <NVFragment>
+      
       Connected : {status?<div style={{color:'green'}}>Online</div>:<div style={{color:'gray'}}>Offline</div>}
-      <Router>
+      <BrowserRouter>
         <Header onMenuClick={() => setSidebarOpen(true)} />
         <div className='app flex'> 
           <SideNav open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -35,10 +39,11 @@ function App() {
               <Route path="/contactus" element={<ContactUs/>}/>
               <Route path="/moreinfo" element={<MoreInfo/>}/>
               <Route path="/login" element={<Login/>}/>
+              <Route path="/fiber" element={<ReactFiber/>}/>
             </Routes>
           </div>
         </div>
-      </Router>
+      </BrowserRouter>
       <StarRating/>
     </NVFragment>
   )
